@@ -1,0 +1,23 @@
+<div class="todo-body">
+  <!-- Checkbox for completing / uncompleting todo -->
+  <input
+    type="checkbox"
+    [checked]="todo.completed"
+    (change)="setCompletion($event.returnValue)"
+    [id]="'todo' + todo.id"
+  />
+
+  <label
+    [for]="'todo' + todo.id"
+    class="title"
+  >
+    {{ todo.title }}
+  </label>
+
+  <!-- description -->
+  <div class="description">
+    {{ todo.description }}
+  </div>
+</div>
+
+<i class="handle fas fa-grip-vertical"></i>

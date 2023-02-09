@@ -1,0 +1,23 @@
+<div id="pageContainer">
+  <div id="header">
+    <h2>Todo List</h2>
+
+    <button>
+      <i class="fas fa-plus"></i>
+
+      New
+    </button>
+  </div>
+
+  <ng-container *ngIf="todos$ | async as todo; else loading">
+    <app-todo-item
+      *ngFor="let todo of todo"
+      [todo]="todo"
+    ></app-todo-item>
+  </ng-container>
+</div>
+
+<!-- loading template view -->
+<ng-template #loading>
+  <div>Loading...</div>
+</ng-template>
