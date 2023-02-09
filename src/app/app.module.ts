@@ -6,19 +6,12 @@ import { AppComponent } from './app.component';
 import { TodoPageComponent } from './screens/todo-page/todo-page.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TodoPageComponent,
-    TodoItemComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule
-  ],
+  declarations: [AppComponent, TodoPageComponent, TodoItemComponent],
+  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -33,7 +33,7 @@
 
   align-items: center;
 
-  width: 95%;
+  width: 100%;
 
   gap: 8px;
 }
@@ -55,10 +55,26 @@
 
 input[type='checkbox'] {
   accent-color: var(--color-primary-400);
+
+  cursor: pointer;
+
+  width: 24px;
 }
 
 .handle {
   cursor: grab;
 
   color: var(--color-gray-500);
+}
+
+input {
+  font-size: 1rem;
+
+  width: 100%;
+}
+
+.completed {
+  text-decoration: line-through;
+
+  color: var(--color-gray-400);
 }

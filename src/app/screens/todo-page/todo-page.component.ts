@@ -11,6 +11,15 @@ export class TodoPageComponent {
 
   todos$ = this.todoService.getTodoItems();
 
+  createTodo() {
+    this.todoService.addTodoItem({
+      id: Math.floor(Math.random() * 1000),
+      title: 'New Todo',
+      description: 'New Todo Description',
+      completed: false,
+    });
+  }
+
   deleteTodo(id: number) {
     this.todoService.deleteTodoItem(id);
   }
