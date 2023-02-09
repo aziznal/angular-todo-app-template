@@ -1,0 +1,20 @@
+// color definitions
+:root {
+  --color-primary-light: rgb(100, 162, 255);
+  --color-primary: rgb(73, 145, 255);
+  --color-primary-dark: rgb(47, 125, 241);
+
+  --color-secondary-light: rgb(255, 204, 102);
+  --color-secondary: rgb(252, 163, 17);
+  --color-secondary-dark: rgb(245, 124, 0);
+
+  --color-neutral-100: #fff;
+  --color-neutral-200: #f0f0f0;
+
+  --color-neutral-900: #1a1a1a;
+  --color-neutral-1000: #111;
+}
+
+*, body {
+  color: var(--color-neutral-1000);
+}
