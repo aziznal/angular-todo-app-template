@@ -1,5 +1,8 @@
 // import utils
 @use './styles/reset.scss';
+
+@use './styles/material/material.scss';
+
 @use './styles/utils.scss';
 @use './styles/typography.scss';
 @use './styles/theme.scss';
