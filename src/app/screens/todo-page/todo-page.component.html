@@ -2,24 +2,42 @@
   <div id="header">
     <h2>Todo List</h2>
 
-    <button (click)="createTodo()">
+    <button
+      (click)="createTodo()"
+      [disabled]="isLoading"
+    >
       <i class="fas fa-plus"></i>
 
       New
     </button>
   </div>
 
-  <ng-container *ngIf="todos$ | async as todo; else loading">
+  <ng-container *ngIf="todos$ | async as todos; else loading">
     <app-todo-item
-      *ngFor="let todo of todo"
+      *ngFor="let todo of todos"
       [todo]="todo"
       (updated)="updateTodo($event)"
       (deleted)="deleteTodo($event)"
     ></app-todo-item>
+
+    <div
+      id="noTodos"
+      *ngIf="todos.length === 0"
+    >
+      No todos found.
+    </div>
+
+    <!-- Loading template when a todo is being modified, deleted, or created -->
+    <div
+      class="loading-view"
+      *ngIf="isLoading"
+    >
+      Loading...
+    </div>
   </ng-container>
 </div>
 
 <!-- loading template view -->
 <ng-template #loading>
-  <div>Loading...</div>
+  <div class="loading-view">Loading...</div>
 </ng-template>

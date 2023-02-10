@@ -11,20 +11,34 @@ export class TodoPageComponent {
 
   todos$ = this.todoService.getTodoItems();
 
-  createTodo() {
-    this.todoService.addTodoItem({
+  isLoading = false;
+
+  async createTodo() {
+    this.isLoading = true;
+
+    await this.todoService.addTodoItem({
       id: Math.floor(Math.random() * 1000),
       title: 'New Todo',
       description: 'New Todo Description',
       completed: false,
     });
+
+    this.isLoading = false;
   }
 
-  deleteTodo(id: number) {
-    this.todoService.deleteTodoItem(id);
+  async deleteTodo(id: number) {
+    this.isLoading = true;
+
+    await this.todoService.deleteTodoItem(id);
+
+    this.isLoading = false;
   }
 
-  updateTodo(todo: Todo) {
-    this.todoService.updateTodoItem(todo);
+  async updateTodo(todo: Todo) {
+    this.isLoading = true;
+
+    await this.todoService.updateTodoItem(todo);
+
+    this.isLoading = false;
   }
 }

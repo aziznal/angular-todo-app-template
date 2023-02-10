@@ -22,4 +22,10 @@ button {
   &:active {
     background-color: var(--color-primary-300);
   }
+
+  &:disabled {
+    background-color: var(--color-gray-300);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }
