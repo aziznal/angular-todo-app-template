@@ -1,6 +1,7 @@
 import { Todo } from './../../models/todo.model';
 import { TodoLocalDataSource } from './../../data/todo-data-source.service';
 import { Component } from '@angular/core';
+import { CdkDragSortEvent, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   templateUrl: './todo-page.component.html',
@@ -26,5 +27,9 @@ export class TodoPageComponent {
 
   async updateTodo(todo: Todo) {
     await this.todoService.updateTodoItem(todo);
+  }
+
+  moveTodoItem(event: CdkDragSortEvent) {
+    this.todoService.reorderItem(event.previousIndex, event.currentIndex);
   }
 }

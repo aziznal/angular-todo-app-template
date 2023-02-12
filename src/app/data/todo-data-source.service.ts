@@ -1,6 +1,9 @@
 import { Todo } from './../models/todo.model';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, delay, Observable, of } from 'rxjs';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
+
+const artificalDelay = 200;
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +40,7 @@ export class TodoLocalDataSource implements OnDestroy {
     // returns todo items with a pipe that sets loading to false
     this.loading$.next(true);
 
-    return this.#todoItems$.pipe(delay(500), () => {
+    return this.#todoItems$.pipe(delay(artificalDelay), () => {
       this.loading$.next(false);
       return of(this.#todoItems);
     });
@@ -46,7 +49,7 @@ export class TodoLocalDataSource implements OnDestroy {
   async addTodoItem(todoItem: Todo): Promise<void> {
     this.loading$.next(true);
 
-    await this.#sleep(500);
+    await this.#sleep(artificalDelay);
 
     this.#todoItems.push(todoItem);
 
@@ -58,7 +61,7 @@ export class TodoLocalDataSource implements OnDestroy {
   async updateTodoItem(todoItem: Todo): Promise<void> {
     this.loading$.next(true);
 
-    await this.#sleep(500);
+    await this.#sleep(artificalDelay);
 
     const index = this.#todoItems.findIndex(item => item.id === todoItem.id);
 
@@ -74,13 +77,25 @@ export class TodoLocalDataSource implements OnDestroy {
   async deleteTodoItem(id: number): Promise<void> {
     this.loading$.next(true);
 
-    await this.#sleep(500);
+    await this.#sleep(artificalDelay);
 
     const index = this.#todoItems.findIndex(item => item.id === id);
 
     if (index > -1) {
       this.#todoItems.splice(index, 1);
     }
+
+    this.#todoItems$.next(this.#todoItems);
+
+    this.loading$.next(false);
+  }
+
+  async reorderItem(fromIndex: number, toIndex: number): Promise<void> {
+    this.loading$.next(true);
+
+    await this.#sleep(artificalDelay);
+
+    moveItemInArray(this.#todoItems, fromIndex, toIndex);
 
     this.#todoItems$.next(this.#todoItems);
 
