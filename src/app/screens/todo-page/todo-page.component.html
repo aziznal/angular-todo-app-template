@@ -4,7 +4,7 @@
 
     <button
       (click)="createTodo()"
-      [disabled]="isLoading"
+      [disabled]="todoService.loading$ | async"
     >
       <i class="fas fa-plus"></i>
 
@@ -18,6 +18,8 @@
       [todo]="todo"
       (updated)="updateTodo($event)"
       (deleted)="deleteTodo($event)"
+      appDisabledOverlay
+      [disabled]="todoService.loading$ | async"
     ></app-todo-item>
 
     <div
@@ -30,7 +32,7 @@
     <!-- Loading template when a todo is being modified, deleted, or created -->
     <div
       class="loading-view"
-      *ngIf="isLoading"
+      *ngIf="todoService.loading$ | async"
     >
       Loading...
     </div>

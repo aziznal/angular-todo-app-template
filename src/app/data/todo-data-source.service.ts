@@ -6,6 +6,7 @@ import { BehaviorSubject, delay, Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class TodoLocalDataSource implements OnDestroy {
+  // mocked storage for todo items
   #todoItems: Todo[] = [
     {
       id: 1,
@@ -29,19 +30,34 @@ export class TodoLocalDataSource implements OnDestroy {
 
   #todoItems$: BehaviorSubject<Todo[]> = new BehaviorSubject(this.#todoItems);
 
+  // whether an async operation is in progress
+  loading$ = new BehaviorSubject(false);
+
   getTodoItems(): Observable<Todo[]> {
-    return this.#todoItems$.pipe(delay(500));
+    // returns todo items with a pipe that sets loading to false
+    this.loading$.next(true);
+
+    return this.#todoItems$.pipe(delay(500), () => {
+      this.loading$.next(false);
+      return of(this.#todoItems);
+    });
   }
 
   async addTodoItem(todoItem: Todo): Promise<void> {
+    this.loading$.next(true);
+
     await this.#sleep(500);
 
     this.#todoItems.push(todoItem);
 
     this.#todoItems$.next(this.#todoItems);
+
+    this.loading$.next(false);
   }
 
   async updateTodoItem(todoItem: Todo): Promise<void> {
+    this.loading$.next(true);
+
     await this.#sleep(500);
 
     const index = this.#todoItems.findIndex(item => item.id === todoItem.id);
@@ -51,9 +67,13 @@ export class TodoLocalDataSource implements OnDestroy {
     }
 
     this.#todoItems$.next(this.#todoItems);
+
+    this.loading$.next(false);
   }
 
   async deleteTodoItem(id: number): Promise<void> {
+    this.loading$.next(true);
+
     await this.#sleep(500);
 
     const index = this.#todoItems.findIndex(item => item.id === id);
@@ -63,6 +83,8 @@ export class TodoLocalDataSource implements OnDestroy {
     }
 
     this.#todoItems$.next(this.#todoItems);
+
+    this.loading$.next(false);
   }
 
   // helper to simulate latency
@@ -72,5 +94,6 @@ export class TodoLocalDataSource implements OnDestroy {
 
   ngOnDestroy(): void {
     this.#todoItems$.complete();
+    this.loading$.complete();
   }
 }
